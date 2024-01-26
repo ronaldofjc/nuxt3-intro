@@ -1,6 +1,8 @@
 <template>
-  <Header />
-  <div>Página Inicial</div>
+  <div>
+    <IconPlay />
+    <p>Play</p>
+  </div>
 </template>
 
 <script setup></script>
