@@ -7,7 +7,7 @@
 <script setup>
 definePageMeta({
   layout: "exibicao",
-  middleware: ["video", "auth"],
+  middleware: ["video"],
 });
 const route = useRoute();
 const idParams = computed(() => route.params.id);
