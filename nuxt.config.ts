@@ -9,8 +9,15 @@ export default defineNuxtConfig({
   alias: {
     css: "/<rootDir>/assets/css",
   },
-  app: {
-    //baseURL: process.env.BASE_URL || "http://localhost:3000",
-  },
   css: ["@/assets/css/main.css"],
+  modules: ['@pinia/nuxt'],
+  pinia: {
+    storesDirs: ["./stores/**"]
+  },
+  build: {
+    extend(config) {
+        const hmrIndex = config.plugins.findIndex(p => p.constructor.name === 'HotModuleReplacementPlugin')
+        config.plugins.splice(hmrIndex, 1)
+    } 
+  }
 });
