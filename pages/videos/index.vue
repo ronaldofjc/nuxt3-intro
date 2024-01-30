@@ -2,10 +2,11 @@
   <div>Videos</div>
 
   <NuxtLink to="/videos/favoritos">Favoritos</NuxtLink>
+  <h1>{{ $t("titulo") }}</h1>
   <div class="videos">
     <div v-for="video in videos" :key="video.id">
       <h2>{{ video.descricao }}</h2>
-      <p>{{ converteDataBrasil(video.data_postagem) }}</p>
+      <p v-data-horario="'dd/mm/yyyy'">{{ video.data_postagem }}</p>
       <iframe
         :src="video.url"
         title="Youtube Video Player"
@@ -26,6 +27,11 @@ import type { Video } from "~/interfaces/video";
 import { useVideoStore } from "../../stores/video";
 
 const { adicionarFavorito } = useVideoStore();
+const { $toast } = useNuxtApp();
+
+onMounted(() => {
+  $toast.success("Toast adicionado com sucesso!");
+});
 
 const videos: Video[] = [
   {
@@ -41,10 +47,6 @@ const videos: Video[] = [
     data_postagem: "2023-10-20",
   },
 ];
-
-const converteDataBrasil = (dataAtual: string) => {
-  return new Date(dataAtual).toLocaleDateString("pt-br");
-};
 </script>
 
 <style lang="scss" scoped>

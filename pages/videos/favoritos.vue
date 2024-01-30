@@ -1,6 +1,7 @@
 <template>
   <div>Vídeos Favoritos</div>
   <div class="videos">
+    <h1>{{ $t("tituloFavoritos") }}</h1>
     <div v-for="video in favoritos" :key="video.id">
       <h2>{{ video.descricao }}</h2>
       <iframe
@@ -11,7 +12,7 @@
         frameborder="0"
       ></iframe>
       <div>
-        <button @click="videoStore.deletaFavorito(video.id)">Remover Favorito</button>
+        <button @click="removeFavorito(video.id)">Remover Favorito</button>
       </div>
     </div>
   </div>
@@ -23,6 +24,12 @@ import { useVideoStore } from "../../stores/video";
 
 const videoStore = useVideoStore();
 const { favoritos } = storeToRefs(videoStore);
+const { $toast } = useNuxtApp();
+
+const removeFavorito = (id: number) => {
+  videoStore.deletaFavorito(id);
+  $toast.error("Removido com sucesso");
+};
 </script>
 
 <style lang="scss" scoped></style>
