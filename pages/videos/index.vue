@@ -1,5 +1,5 @@
 <template>
-  <div>Videos</div>
+  <div class="text-4xl">Videos</div>
 
   <NuxtLink to="/videos/favoritos">Favoritos</NuxtLink>
   <h1>{{ $t("titulo") }}</h1>
