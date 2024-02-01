@@ -1,37 +1,51 @@
 <template>
-  <div class="text-4xl">Videos</div>
+  <div class="text-4xl text-center">{{ $t("titulo") }}</div class="text-4xl">
+  <br/>
+  <div class="grid grid-cols-2 lg:grid-cols-3 items-center justify-center gap-4">
+    <UCard v-for="video in videos" :key="video.id">
+      <template #header>{{ video.descricao }}</template>
 
-  <NuxtLink to="/videos/favoritos">Favoritos</NuxtLink>
-  <h1>{{ $t("titulo") }}</h1>
-  <div class="videos">
-    <div v-for="video in videos" :key="video.id">
-      <h2>{{ video.descricao }}</h2>
-      <p v-data-horario="'dd/mm/yyyy'">{{ video.data_postagem }}</p>
       <iframe
+        class="h-48 w-full"
         :src="video.url"
         title="Youtube Video Player"
-        width="550"
-        height="400"
         frameborder="0"
-      ></iframe>
-      <div>
-        <button @click="adicionarFavorito(video)">Adicionar Favorito</button>
-      </div>
-    </div>
+      />
+
+      <template #footer>
+        <div class="flex justify-between">
+          <UButton @click="favoritar(video)">Adicionar Favorito</UButton>
+          <NuxtLink
+            :to="{ 
+              name: 'videos-id',
+              params: {
+                id: video.id.toString()
+              }  
+            }"
+          >
+            <UButton label="Ver Vídeo" color="gray">
+              <template #trailing>
+                <UIcon name="i-heroicons-arrow-right-20-solid" />
+              </template>
+            </UButton>
+          </NuxtLink>
+        </div>
+      </template>
+    </UCard>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useFavoritos } from "../../composables/states";
 import type { Video } from "~/interfaces/video";
 import { useVideoStore } from "../../stores/video";
 
 const { adicionarFavorito } = useVideoStore();
 const { $toast } = useNuxtApp();
 
-onMounted(() => {
-  $toast.success("Toast adicionado com sucesso!");
-});
+const favoritar = (video: Video) => {
+  adicionarFavorito(video)
+  $toast.success("Adicionado aos favoritos com sucesso!");
+}
 
 const videos: Video[] = [
   {
