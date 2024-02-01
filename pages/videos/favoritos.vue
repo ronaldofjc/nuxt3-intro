@@ -1,25 +1,27 @@
 <template>
-  <div>Vídeos Favoritos</div>
-  <div class="videos">
-    <h1>{{ $t("tituloFavoritos") }}</h1>
-    <div v-for="video in favoritos" :key="video.id">
-      <h2>{{ video.descricao }}</h2>
-      <iframe
-        :src="video.url"
-        title="Youtube Video Player"
-        width="550"
-        height="400"
-        frameborder="0"
-      ></iframe>
-      <div>
-        <button @click="removeFavorito(video.id)">Remover Favorito</button>
-      </div>
+  <h1 class="text-4xl text-center mb-4">{{ $t("tituloFavoritos") }}</h1>
+  <div>
+    <div class="grid grid-cols-2 lg:grid-cols-3 items-center justify-center gap-4">
+      <UCard v-for="video in favoritos" :key="video.id">
+        {{ video.descricao }}
+
+        <iframe
+          class="h-48 w-full"
+          :src="video.url"
+          title="YouTube video player"
+          frameborder="0"
+        />
+        <template #footer>
+          <div class="flex justify-between">
+            <UButton @click="removeFavorito(video.id)"> Remover Favorito </UButton>
+          </div>
+        </template>
+      </UCard>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useFavoritos } from "../../composables/states";
 import { useVideoStore } from "../../stores/video";
 
 const videoStore = useVideoStore();
@@ -31,5 +33,3 @@ const removeFavorito = (id: number) => {
   $toast.error("Removido com sucesso");
 };
 </script>
-
-<style lang="scss" scoped></style>
