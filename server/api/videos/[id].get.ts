@@ -1,0 +1,35 @@
+import { Video } from "~/interfaces/video";
+
+export default defineEventHandler((event) => {
+  const videos: Video[] = [
+    {
+      id: 1,
+      descricao: "01 - Introdução e Instalação",
+      url: "https://www.youtube.com/embed/WahQ5AoXpuU?si=F2FrXqWjB1dtJvGw",
+      data_postagem: "2023-10-15",
+    },
+    {
+      id: 2,
+      descricao: "02 - Configuração",
+      url: "https://www.youtube.com/embed/JbbB84bnPog?si=mKtXqUkTKCuNHqjJ",
+      data_postagem: "2023-10-20",
+    },
+    {
+      id: 3,
+      descricao: "03 - Pages",
+      url: "https://www.youtube.com/embed/S99sVicr8NI?si=jR8Y0QLVVLoQA7mX",
+      data_postagem: "2023-10-10",
+    },
+    {
+      id: 4,
+      descricao: "04 - Components",
+      url: "https://www.youtube.com/embed/cCHWanw49l8?si=i7569DvWVVtto-Ja",
+      data_postagem: "2023-10-05",
+    },
+  ];
+
+  const requestID = event.context.params?.id || 0
+  return {
+    videos: videos.find((v) => v.id === +requestID),
+  };
+});
